@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Junstore247.vn | Premium Config, Scripts &amp; Earn Coins</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <style>
+        /* ==============================================================
+           DESIGN SYSTEM — DEEP BLACK, IVORY & METAL
+           Futuristic-luxury console for a Roblox config/script
+           marketplace. Void black + ivory + chrome + antique gold,
+           with a single restrained neon accent reserved for "live" states.
+           ============================================================== */
+        :root {
+            --void: #07080b;
+            --panel: #101116;
+            --panel-elevated: #16171e;
+
+            --ink: #f3f1ea;
+            --ink-soft: #9a9aa5;
+            --ink-faint: #55555f;
+
+            --chrome: #9aa2ad;
+            --hairline: #201f28;
+            --hairline-hover: #38394a;
+
+            --gold: #c9a15a;
+            --gold-bright: #e7c583;
+            --neon: #63e6d4;
+
+            --danger: #e2637a;
+            --danger-dim: #7a323f;
+            --success: #7fd9b6;
+            --info: #7fa8c9;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Space Mono', monospace;
+
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-body);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+        }
+
+        body {
+            background-color: var(--void);
+            color: var(--ink);
+            line-height: 1.5;
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+            animation: pageFade 0.7s var(--ease) both;
+        }
+        @keyframes pageFade { from { opacity: 0; } to { opacity: 1; } }
+
+        /* film-grain overlay, whole page, very low opacity */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 3; pointer-events: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+            opacity: 0.035;
+            mix-blend-mode: overlay;
+        }
+
+        ::selection { background: var(--gold); color: #17130a; }
+
+        h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.01em; }
+        .accent-text { color: var(--gold-bright); font-style: italic; font-family: var(--font-display); }
+        .eyebrow {
+            font-family: var(--font-body); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--gold-bright);
+        }
+
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 1px solid var(--neon); outline-offset: 2px;
+        }
+
+        /* ==============================================================
+           HEADER
+           ============================================================== */
+        header {
+            background: rgba(7, 8, 11, 0.72);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--hairline);
+            padding: 0 1rem;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.4s var(--ease), border-color 0.4s var(--ease), height 0.4s var(--ease);
+        }
+        header.scrolled {
+            background: rgba(7, 8, 11, 0.92);
+            border-color: var(--hairline-hover);
+        }
+
+        #globalAlert {
+            background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+            color: #1a1207;
+            text-align: center;
+            padding: 0.4rem 1rem;
+            font-size: 0.78rem;
+            font-family: var(--font-body);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            display: none;
+            z-index: 99;
+        }
+
+        .logo { text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: 0.6rem; }
+        .badge-mark {
+            width: 30px; height: 30px; position: relative; border: 1px solid var(--gold);
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            font-family: var(--font-display); font-weight: 800; font-size: 0.85rem; color: var(--ink);
+            flex-shrink: 0;
+        }
+        .badge-mark::after {
+            content: ''; position: absolute; left: -60%; top: 0; width: 55%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 230, 212, 0.55), transparent);
+            animation: scan 3.6s ease-in-out infinite;
+        }
+        @keyframes scan { 0% { left: -60%; } 100% { left: 120%; } }
+        .logo .word { font-family: var(--font-body); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; }
+
+        .nav-links { display: none; gap: 1.4rem; list-style: none; }
+        .nav-links a {
+            color: var(--ink-soft); text-decoration: none; font-weight: 500; font-size: 0.8rem;
+            letter-spacing: 0.02em; position: relative; padding-bottom: 4px; transition: color 0.3s var(--ease);
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+            background: var(--gold-bright); transition: width 0.3s var(--ease);
+        }
+        .nav-links a:hover, .nav-links a.active-link { color: var(--ink); }
+        .nav-links a:hover::after, .nav-links a.active-link::after { width: 100%; }
+
+        .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
+
+        .coin-balance {
+            background: rgba(201, 161, 90, 0.08);
+            border: 1px solid rgba(201, 161, 90, 0.3);
+            color: var(--gold-bright);
+            height: 32px; padding: 0 0.6rem; border-radius: var(--radius-sm);
+            font-size: 0.75rem; font-family: var(--font-mono); font-weight: 700;
+            display: inline-flex; align-items: center; gap: 0.35rem;
+        }
+
+        /* ==============================================================
+           BUTTONS
+           ============================================================== */
+        .btn {
+            height: 34px; padding: 0 0.85rem; border-radius: var(--radius-sm);
+            font-weight: 500; font-size: 0.8rem; cursor: pointer; transition: all 0.25s var(--ease);
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+            border: 1px solid transparent; text-decoration: none; white-space: nowrap;
+        }
+        .btn-outline { background: transparent; color: var(--ink); border-color: var(--hairline); }
+        .btn-outline:hover { background: var(--panel); border-color: var(--hairline-hover); }
+        .btn-primary { background: var(--ink); color: var(--void); font-weight: 600; }
+        .btn-primary:hover { background: var(--gold-bright); }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-bright)); color: #1a1207; font-weight: 700; }
+        .btn-gold:hover { filter: brightness(1.1); box-shadow: 0 0 24px -4px var(--gold); }
+        .btn-danger { background: rgba(226, 99, 122, 0.14); color: var(--danger); border: 1px solid rgba(226, 99, 122, 0.35); }
+        .btn-danger:hover { background: rgba(226, 99, 122, 0.24); }
+        .btn-lg { height: 46px; padding: 0 1.4rem; font-size: 0.9rem; }
+
+        .cart-badge {
+            background: var(--danger); color: white; font-size: 0.65rem; font-family: var(--font-mono);
+            height: 16px; min-width: 16px; border-radius: 8px;
+            display: inline-flex; align-items: center; justify-content: center; font-weight: 700;
+        }
+
+        /* ==============================================================
+           HERO
+           ============================================================== */
+        .hero { position: relative; padding: 3rem 1rem 0; overflow: hidden; }
+        .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.28; animation: drift 22s ease-in-out infinite; }
+        .orb--gold { width: 300px; height: 300px; background: var(--gold); top: -100px; left: -70px; }
+        .orb--silver { width: 240px; height: 240px; background: var(--chrome); bottom: -80px; right: -50px; animation-duration: 26s; animation-delay: -6s; opacity: 0.14; }
+        @keyframes drift { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(26px, -18px); } }
+        .hero::after {
+            content: ''; position: absolute; top: -20%; left: 8%; width: 1px; height: 140%;
+            background: linear-gradient(180deg, transparent, rgba(231, 197, 131, 0.45), transparent);
+            transform: rotate(14deg); z-index: 0; opacity: 0; animation: sweepIn 2.4s var(--ease) 0.6s forwards;
+        }
+        @keyframes sweepIn { 0% { opacity: 0; transform: rotate(14deg) translateX(-40px); } 30% { opacity: 0.7; } 100% { opacity: 0.18; transform: rotate(14deg) translateX(0); } }
+
+        .hero-inner {
+            position: relative; z-index: 1; max-width: 1100px; margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center; gap: 2rem; text-align: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.3rem 0.75rem; background: var(--panel); border: 1px solid var(--hairline);
+            border-radius: 99px; font-family: var(--font-body); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.12em;
+            color: var(--neon); opacity: 0; animation: fadeUp 0.7s var(--ease) 0.05s forwards;
+        }
+        .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--neon); box-shadow: 0 0 8px 2px var(--neon); animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero-title {
+            font-family: var(--font-display); font-weight: 800;
+            font-size: clamp(2.6rem, 9vw, 5.2rem); line-height: 0.98; letter-spacing: -0.02em;
+        }
+        .hero-title .line {
+            display: block; opacity: 0; filter: blur(6px); transform: translateY(22px);
+            animation: revealLine 0.9s var(--ease) forwards;
+        }
+        .hero-title .line:nth-child(1) { animation-delay: 0.12s; }
+        .hero-title .line:nth-child(2) { animation-delay: 0.24s; }
+        .hero-title .line.accent { color: var(--gold-bright); font-style: italic; font-weight: 600; animation-delay: 0.36s; }
+        @keyframes revealLine { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+
+        .hero-desc {
+            color: var(--ink-soft); font-size: 0.9rem; max-width: 480px; margin: 0 auto;
+            opacity: 0; animation: fadeUp 0.8s var(--ease) 0.5s forwards;
+        }
+        .hero-cta { opacity: 0; animation: fadeUp 0.8s var(--ease) 0.62s forwards; }
+
+        /* Top Xu — leaderboard, the hero's signature element */
+        .top-xu-card {
+            width: 100%; max-width: 320px; margin: 0 auto;
+            background: linear-gradient(180deg, var(--panel-elevated), var(--panel));
+            border: 1px solid var(--hairline); border-radius: var(--radius-md);
+            padding: 1.1rem 1.25rem; box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.65);
+            opacity: 0; animation: fadeUp 1s var(--ease) 0.3s forwards;
+        }
+        .top-xu-head {
+            display: flex; align-items: center; justify-content: space-between;
+            padding-bottom: 0.7rem; margin-bottom: 0.4rem; border-bottom: 1px solid var(--hairline);
+        }
+        .top-xu-title { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 1.05rem; color: var(--gold-bright); }
+        .top-xu-head i { color: var(--gold); font-size: 0.9rem; }
+        .top-row { display: flex; align-items: center; gap: 0.65rem; padding: 0.5rem 0; border-bottom: 1px dashed var(--hairline); }
+        .top-row:last-child { border-bottom: none; }
+        .top-rank { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-faint); width: 1.4rem; flex-shrink: 0; }
+        .top-row:first-child .top-rank { color: var(--gold-bright); font-weight: 700; }
+        .top-name { flex: 1; font-size: 0.85rem; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .top-coins { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-soft); display: flex; align-items: center; gap: 0.3rem; flex-shrink: 0; }
+        .top-coins i { color: var(--gold); font-size: 0.7rem; }
+
+        @media (min-width: 860px) {
+            .hero-inner { flex-direction: row; text-align: left; align-items: center; justify-content: space-between; gap: 3rem; }
+            .hero-copy { flex: 1; }
+            .hero-desc { margin: 0; }
+            .top-xu-card { flex-shrink: 0; }
+        }
+
+        /* Marquee ticker */
+        .marquee {
+            position: relative; z-index: 1; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+            overflow: hidden; margin-top: 2.5rem; background: var(--panel);
+        }
+        .marquee-track {
+            display: flex; width: max-content; gap: 2.5rem; padding: 0.6rem 0;
+            animation: marquee 24s linear infinite;
+            font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em;
+            color: var(--ink-faint); text-transform: uppercase;
+        }
+        .marquee-track span.dot { color: var(--gold); }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* ==============================================================
+           HOW IT WORKS
+           ============================================================== */
+        .how-it-works { padding: 3.5rem 1rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .steps { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+        .step { border-top: 1px solid var(--hairline); padding-top: 1.25rem; }
+        .step-num { font-family: var(--font-mono); font-size: 0.8rem; color: var(--gold-bright); }
+        .step h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; margin: 0.5rem 0 0.35rem; }
+        .step p { color: var(--ink-soft); font-size: 0.85rem; }
+        @media (min-width: 720px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
+
+        /* ==============================================================
+           SECTIONS / GRID / CARDS
+           ============================================================== */
+        .section-header {
+            max-width: 1100px; margin: 0 auto 1rem; padding: 0 1rem;
+            display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;
+        }
+        .section-title {
+            font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; color: var(--ink);
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .section-subtitle { font-size: 0.75rem; color: var(--ink-soft); margin-top: 0.2rem; font-family: var(--font-body); }
+
+        .rate-callout {
+            display: inline-flex; align-items: baseline; gap: 0.4rem; font-family: var(--font-mono);
+            border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 0.4rem 0.75rem;
+            background: var(--panel);
+        }
+        .rate-callout .num { font-size: 1.3rem; font-weight: 700; color: var(--gold-bright); }
+        .rate-callout .unit { font-size: 0.68rem; color: var(--ink-soft); text-transform: uppercase; }
+        .rate-callout .eq { color: var(--ink-faint); font-size: 0.8rem; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem 2rem; width: 100%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+        .empty-state {
+            text-align: center; color: var(--ink-faint); padding: 3rem 1rem; width: 100%; grid-column: 1 / -1;
+            font-size: 0.85rem; border: 1px dashed var(--hairline); border-radius: var(--radius-md);
+        }
+
+        .card {
+            background: linear-gradient(180deg, var(--panel), var(--void));
+            border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 1.25rem;
+            display: flex; flex-direction: column; position: relative;
+            transition: border-color 0.3s var(--ease), transform 0.15s ease-out, box-shadow 0.3s var(--ease);
+            transform-style: preserve-3d; will-change: transform;
+        }
+        .card::before, .card::after {
+            content: ''; position: absolute; width: 12px; height: 12px; opacity: 0;
+            border-style: solid; border-color: var(--gold-bright); transition: opacity 0.3s var(--ease);
+        }
+        .card::before { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+        .card::after { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+        .card:hover { border-color: var(--hairline-hover); box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.6); }
+        .card:hover::before, .card:hover::after { opacity: 0.7; }
+
+        @media (min-width: 900px) {
+            .grid .card:nth-child(3n+2) { transform: translateY(1.3rem); }
+        }
+
+        .tag {
+            align-self: flex-start; background: var(--panel-elevated); color: var(--ink-soft);
+            border: 1px solid var(--hairline); font-size: 0.62rem; padding: 0.18rem 0.5rem;
+            border-radius: 4px; margin-bottom: 0.75rem; text-transform: uppercase;
+            font-family: var(--font-body); font-weight: 700; letter-spacing: 0.04em;
+        }
+        .tag.premium { color: var(--gold-bright); border-color: rgba(201, 161, 90, 0.35); }
+        .tag.free { color: var(--info); background: rgba(127, 168, 201, 0.1); border-color: rgba(127, 168, 201, 0.28); }
+        .tag.task { color: var(--chrome); background: rgba(154, 162, 173, 0.1); border-color: rgba(154, 162, 173, 0.3); }
+
+        .card-title { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; margin-bottom: 0.3rem; color: var(--ink); }
+        .card-desc { color: var(--ink-soft); font-size: 0.8rem; margin-bottom: 1.25rem; flex-grow: 1; word-break: break-word; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 0.75rem; border-top: 1px dashed var(--hairline); }
+        .price { font-size: 0.95rem; font-weight: 700; color: var(--ink); font-family: var(--font-mono); }
+        .price.free { color: var(--success); }
+        .price.reward { color: var(--gold-bright); font-size: 0.85rem; display: flex; align-items: center; gap: 0.3rem; }
+
+        .divider {
+            position: relative; height: 1px; max-width: 1100px; margin: 1rem auto 2rem; width: calc(100% - 2rem);
+            background-image: repeating-linear-gradient(to right, var(--gold) 0 6px, transparent 6px 14px);
+            opacity: 0.3;
+        }
+
+        /* ==============================================================
+           WHY US — horizontal scroll-snap strip
+           ============================================================== */
+        .why-us { padding-top: 1rem; }
+        .why-track {
+            display: flex; gap: 1rem; overflow-x: auto; padding: 0 1rem 1rem;
+            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+        }
+        .why-track::-webkit-scrollbar { height: 6px; }
+        .why-track::-webkit-scrollbar-thumb { background: var(--hairline-hover); border-radius: 3px; }
+        .why-card {
+            scroll-snap-align: start; flex: 0 0 220px; background: var(--panel); border: 1px solid var(--hairline);
+            border-radius: var(--radius-md); padding: 1.25rem;
+        }
+        .why-card i { color: var(--gold-bright); font-size: 1.1rem; margin-bottom: 0.75rem; display: block; }
+        .why-card h4 { font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; margin-bottom: 0.4rem; }
+        .why-card p { color: var(--ink-soft); font-size: 0.78rem; }
+
+        /* ==============================================================
+           MODALS / FORMS
+           ============================================================== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 3, 5, 0.8); backdrop-filter: blur(6px); z-index: 1000;
+            opacity: 0; pointer-events: none; transition: opacity 0.25s var(--ease);
+            display: flex; align-items: center; justify-content: center; padding: 1rem;
+        }
+        .modal-overlay.show { opacity: 1; pointer-events: auto; }
+        .modal {
+            background: var(--panel-elevated); border: 1px solid var(--hairline);
+            border-radius: var(--radius-lg); width: 100%; max-width: 400px; padding: 1.5rem;
+            transform: translateY(14px) scale(0.98); transition: transform 0.3s var(--ease); position: relative;
+            max-height: 90vh; overflow-y: auto; box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+        }
+        .modal.admin-modal { max-width: 560px; }
+        .modal-overlay.show .modal { transform: translateY(0) scale(1); }
+
+        .close-modal {
+            position: absolute; top: 1rem; right: 1rem; background: none; border: none;
+            color: var(--ink-faint); font-size: 1.1rem; cursor: pointer; transition: color 0.2s, transform 0.2s;
+        }
+        .close-modal:hover { color: var(--gold-bright); transform: rotate(90deg); }
+
+        .modal-tabs { display: flex; gap: 1rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--hairline); overflow-x: auto; }
+        .tab-btn {
+            background: none; border: none; color: var(--ink-soft); font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; padding-bottom: 0.5rem; border-bottom: 2px solid transparent; white-space: nowrap;
+            transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+        }
+        .tab-btn.active { color: var(--gold-bright); border-bottom-color: var(--gold-bright); }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label {
+            display: block; font-size: 0.7rem; color: var(--ink-soft); margin-bottom: 0.4rem;
+            text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-body); font-weight: 600;
+        }
+        .form-control {
+            width: 100%; padding: 0.65rem 0.85rem; background: var(--void); border: 1px solid var(--hairline);
+            border-radius: var(--radius-sm); color: var(--ink); font-size: 0.85rem; outline: none;
+            transition: border-color 0.25s var(--ease);
+        }
+        .form-control:focus { border-color: var(--gold); }
+        .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; cursor: pointer; }
+        .checkbox-group input { cursor: pointer; accent-color: var(--gold); }
+        .checkbox-group span { font-size: 0.8rem; color: var(--ink-soft); }
+
+        .submit-btn { width: 100%; margin-top: 0.25rem; }
+
+        /* Admin — pending account approvals */
+        .approval-row {
+            display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+            padding: 0.85rem 0; border-bottom: 1px dashed var(--hairline);
+        }
+        .approval-row:last-child { border-bottom: none; }
+        .approval-name { font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+        .approval-discord { font-size: 0.75rem; color: var(--ink-soft); display: flex; align-items: center; gap: 0.35rem; margin-top: 0.2rem; }
+        .approval-discord i { color: #5865f2; }
+
+        /* Discord promo toast — purely presentational, independent of Supabase */
+        .discord-toast {
+            position: fixed; left: 1rem; right: 1rem; bottom: 1rem; z-index: 900;
+            max-width: 360px; margin: 0 auto;
+            background: var(--panel-elevated); border: 1px solid var(--hairline); border-radius: var(--radius-md);
+            padding: 1rem; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+            transform: translateY(140%); transition: transform 0.5s var(--ease);
+        }
+        .discord-toast.show { transform: translateY(0); }
+        .discord-toast-close {
+            position: absolute; top: 0.6rem; right: 0.6rem; background: none; border: none;
+            color: var(--ink-faint); font-size: 1rem; cursor: pointer;
+        }
+        .discord-toast-close:hover { color: var(--ink); }
+        .discord-toast-body { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.85rem; }
+        .discord-toast-body i { font-size: 1.4rem; color: #5865f2; margin-top: 0.1rem; }
+        .discord-toast-title { font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+        .discord-toast-desc { font-size: 0.75rem; color: var(--ink-soft); margin-top: 0.2rem; }
+        .discord-toast-cta { width: 100%; }
+        @media (min-width: 640px) { .discord-toast { left: auto; right: 1.5rem; bottom: 1.5rem; margin: 0; } }
+
+        /* ==============================================================
+           CART
+           ============================================================== */
+        .cart-drawer {
+            position: fixed; top: 0; right: -100%; width: 100%; max-width: 380px; height: 100%;
+            background: var(--panel-elevated); border-left: 1px solid var(--hairline); z-index: 1001;
+            transition: right 0.4s var(--ease); display: flex; flex-direction: column;
+            box-shadow: -30px 0 80px rgba(0, 0, 0, 0.5);
+        }
+        .cart-drawer.open { right: 0; }
+        .cart-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--hairline); display: flex; justify-content: space-between; align-items: center; }
+        .cart-header h3 { font-family: var(--font-display); font-weight: 600; }
+        .cart-items { flex-grow: 1; overflow-y: auto; padding: 1rem 1.25rem; }
+        .cart-footer { padding: 1.25rem; border-top: 1px solid var(--hairline); background: var(--panel); }
+        .coin-redeem-box {
+            background: var(--void); border: 1px solid var(--hairline); border-radius: var(--radius-sm);
+            padding: 0.75rem; margin-bottom: 0.85rem; display: flex; justify-content: space-between; align-items: center;
+        }
+        .cart-summary-line { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 0.4rem; font-family: var(--font-mono); }
+        .cart-total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--hairline); font-family: var(--font-mono); }
+
+        footer { text-align: center; padding: 2rem 1.5rem; color: var(--ink-faint); font-size: 0.7rem; font-family: var(--font-body); letter-spacing: 0.04em; }
+
+        .auth-pane, .admin-pane { display: none; }
+        .auth-pane.active, .admin-pane.active { display: block; }
+
+        /* Cursor glow — purely decorative, safe to fail invisible */
+        .cursor-glow {
+            position: fixed; top: 0; left: 0; width: 340px; height: 340px; margin: -170px 0 0 -170px;
+            border-radius: 50%; background: radial-gradient(circle, rgba(201, 161, 90, 0.09), transparent 70%);
+            pointer-events: none; z-index: 4; opacity: 0; transition: opacity 0.4s; will-change: transform;
+        }
+
+        /* Safe scroll-reveal: hidden state is only ever applied by JS itself,
+           so content is fully visible by default if the script never runs. */
+        .reveal-pending { opacity: 0; transform: translateY(22px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+        .reveal-pending.revealed { opacity: 1; transform: translateY(0); }
+
+        @media (min-width: 640px) {
+            header { padding: 0 1.5rem; }
+            .nav-links { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="globalAlert"></div>
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+    <header>
+        <a href="#" class="logo">
+            <span class="badge-mark">J</span>
+            <span class="word">JUNSTORE247</span>
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="#" class="active-link" onclick="scrollToSection('premium')">Shop</a></li>
+            <li><a href="#" onclick="scrollToSection('tasks')">Nhiệm Vụ</a></li>
+            <li><a href="#" onclick="scrollToSection('free-resources')">Free</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="btn btn-danger" id="btnAdminPanel" style="display: none;" onclick="openAdminModal()">
+                <i class="fa-solid fa-shield-halved"></i> Admin
+            </button>
+
+            <div class="coin-balance">
+                <i class="fa-solid fa-coins"></i><span id="userCoins">0</span>
+            </div>
+
+            <button class="btn btn-outline" onclick="handleAuthButtonClick()" id="btnLoginNav">
+                <span id="userStatus">Đăng nhập</span>
+            </button>
+            <button class="btn btn-primary" onclick="toggleCart()" style="padding: 0 0.6rem;">
+                <i class="fa-solid fa-bag-shopping"></i> <span class="cart-badge" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg" aria-hidden="true">
+            <span class="orb orb--gold"></span>
+            <span class="orb orb--silver"></span>
+        </div>
+        <div class="hero-inner">
+            <div class="hero-copy">
+                <span class="hero-eyebrow"><span class="dot"></span> ACCESS GRANTED &middot; PHIÊN BẢN 2026</span>
+                <h1 class="hero-title">
+                    <span class="line">Tối ưu hóa</span>
+                    <span class="line">trải nghiệm</span>
+                    <span class="line accent">game.</span>
+                </h1>
+                <p class="hero-desc">Cung cấp Config, Regedit &amp; Script Roblox an toàn. Làm nhiệm vụ tích Xu, quy đổi tiền mua File dễ dàng.</p>
+                <div class="hero-cta">
+                    <button class="btn btn-gold btn-lg magnetic" onclick="scrollToSection('premium')">
+                        <span>Mở Kho Ngay</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="top-xu-card">
+                <div class="top-xu-head">
+                    <span class="top-xu-title">Top Xu</span>
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <div class="top-xu-list" id="topXuList">
+                    <div class="empty-state" style="padding: 1.5rem 1rem;"><p>Đang tải...</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <span>CONFIG</span><span class="dot">&middot;</span><span>SCRIPT</span><span class="dot">&middot;</span><span>REGEDIT</span><span class="dot">&middot;</span><span>AN TOÀN</span><span class="dot">&middot;</span><span>TÍCH XU</span><span class="dot">&middot;</span><span>ĐỔI THƯỞNG</span><span class="dot">&middot;</span>
+            <span>CONFIG</span><span class="dot">&middot;</span><span>SCRIPT</span><span class="dot">&middot;</span><span>REGEDIT</span><span class="dot">&middot;</span><span>AN TOÀN</span><span class="dot">&middot;</span><span>TÍCH XU</span><span class="dot">&middot;</span><span>ĐỔI THƯỞNG</span><span class="dot">&middot;</span>
+        </div>
+    </div>
+
+    <section class="how-it-works reveal-target">
+        <p class="eyebrow">QUY TRÌNH</p>
+        <div class="steps">
+            <div class="step">
+                <span class="step-num">01</span>
+                <h3>Tạo tài khoản</h3>
+                <p>Đăng ký miễn phí trong vài giây, không cần email xác minh.</p>
+            </div>
+            <div class="step">
+                <span class="step-num">02</span>
+                <h3>Làm nhiệm vụ hoặc chọn File</h3>
+                <p>Tích Xu qua nhiệm vụ, hoặc mua trực tiếp File Premium.</p>
+            </div>
+            <div class="step">
+                <span class="step-num">03</span>
+                <h3>Nhận quyền truy cập</h3>
+                <p>Dùng Xu hoặc thanh toán để mở khoá File ngay lập tức.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-header reveal-target" id="premium">
+        <div>
+            <h2 class="section-title">01 &nbsp;Sản Phẩm <span class="accent-text">Premium</span></h2>
+            <p class="section-subtitle">Cam kết chất lượng, hỗ trợ cài đặt 1-1.</p>
+        </div>
+    </div>
+    <main class="container reveal-target"><div class="grid" id="productGrid"></div></main>
+    <div class="divider"></div>
+
+    <div class="section-header reveal-target" id="tasks">
+        <div>
+            <h2 class="section-title"><i class="fa-solid fa-list-check" style="color: var(--gold-bright);"></i> 02 &nbsp;Nhiệm Vụ <span class="accent-text">Tích Xu</span></h2>
+            <p class="section-subtitle">Hoàn thành nhiệm vụ để nhận Xu, quy đổi trực tiếp khi mua File.</p>
+        </div>
+        <div class="rate-callout">
+            <span class="num">1</span><span class="unit">Xu</span>
+            <span class="eq">=</span>
+            <span class="num">300</span><span class="unit">VNĐ</span>
+        </div>
+    </div>
+    <main class="container reveal-target"><div class="grid" id="taskGrid"></div></main>
+    <div class="divider"></div>
+
+    <div class="section-header reveal-target" id="free-resources">
+        <div>
+            <h2 class="section-title">03 &nbsp;Tài Nguyên <span class="accent-text">Miễn Phí</span></h2>
+            <p class="section-subtitle">Tải xuống hoàn toàn miễn phí.</p>
+        </div>
+    </div>
+    <main class="container reveal-target"><div class="grid" id="freeGrid"></div></main>
+
+    <section class="why-us reveal-target">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Vì sao chọn <span class="accent-text">Junstore247</span></h2>
+                <p class="section-subtitle">Vuốt ngang để xem thêm</p>
+            </div>
+        </div>
+        <div class="why-track">
+            <div class="why-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h4>An toàn kiểm định</h4>
+                <p>Config &amp; Script được kiểm tra trước khi đăng tải.</p>
+            </div>
+            <div class="why-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h4>Cập nhật liên tục</h4>
+                <p>Kho File và nhiệm vụ được làm mới thường xuyên.</p>
+            </div>
+            <div class="why-card">
+                <i class="fa-solid fa-headset"></i>
+                <h4>Hỗ trợ 1-1</h4>
+                <p>Đội ngũ hỗ trợ cài đặt trực tiếp khi bạn cần.</p>
+            </div>
+            <div class="why-card">
+                <i class="fa-solid fa-coins"></i>
+                <h4>Đổi Xu linh hoạt</h4>
+                <p>Tích Xu qua nhiệm vụ, quy đổi ngay khi mua File.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>&copy; 2026 JUNSTORE247.VN &middot; POWERED BY SUPABASE</footer>
+
+    <!-- AUTH MODAL -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <button class="close-modal" onclick="closeLoginModal()"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="modal-tabs">
+                <button class="tab-btn active" onclick="switchAuthTab('login', this)">Đăng Nhập</button>
+                <button class="tab-btn" onclick="switchAuthTab('register', this)">Tạo Tài Khoản</button>
+            </div>
+
+            <div id="authPane-login" class="auth-pane active">
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Tên đăng nhập</label>
+                        <input type="text" id="loginUsername" class="form-control" placeholder="Nhập tên tài khoản..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu</label>
+                        <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <label class="checkbox-group">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Ghi nhớ đăng nhập (Remember Me)</span>
+                    </label>
+                    <div class="cf-turnstile" id="turnstileLogin" data-sitekey="0x4AAAAAAEaC3kY9JieCKhRw" data-action="login" data-theme="dark" style="margin-bottom: 1rem;"></div>
+                    <button type="submit" class="btn btn-primary btn-lg submit-btn">Đăng nhập</button>
+                </form>
+            </div>
+
+            <div id="authPane-register" class="auth-pane">
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label>Tạo tên đăng nhập</label>
+                        <input type="text" id="regUsername" class="form-control" placeholder="Tên tài khoản mới..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu</label>
+                        <input type="password" id="regPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Xác nhận mật khẩu</label>
+                        <input type="password" id="regPasswordConfirm" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Discord của bạn</label>
+                        <input type="text" id="regDiscord" class="form-control" placeholder="username Discord hoặc link..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" id="regPhone" class="form-control" placeholder="Nhập số điện thoại..." required>
+                    </div>
+                    <p style="font-size: 0.72rem; color: var(--ink-faint); margin-bottom: 1rem;">Tài khoản cần được Admin duyệt qua Discord trước khi làm nhiệm vụ hoặc tải File.</p>
+                    <div class="cf-turnstile" id="turnstileRegister" data-sitekey="0x4AAAAAAEaC3kY9JieCKhRw" data-action="register" data-theme="dark" style="margin-bottom: 1rem;"></div>
+                    <button type="submit" class="btn btn-gold btn-lg submit-btn">Tạo tài khoản mới</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN MODAL -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal admin-modal">
+            <button class="close-modal" onclick="closeAdminModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 1rem; color: var(--danger); font-family: var(--font-display); font-weight: 600; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-gauge-high"></i> Quản Trị Hệ Thống</h3>
+            
+            <div class="modal-tabs">
+                <button class="tab-btn active" onclick="switchAdminTab('add-task', this)">Thêm Nhiệm Vụ</button>
+                <button class="tab-btn" onclick="switchAdminTab('edit-task', this)">Sửa Nhiệm Vụ</button>
+                <button class="tab-btn" onclick="switchAdminTab('files', this)">Thêm File</button>
+                <button class="tab-btn" onclick="switchAdminTab('manage', this)">Quản Lý File</button>
+                <button class="tab-btn" onclick="switchAdminTab('notice', this)">Thông Báo</button>
+                <button class="tab-btn" onclick="switchAdminTab('approvals', this)">Xét Duyệt</button>
+            </div>
+
+            <div id="adminTab-add-task" class="admin-pane active">
+                <form onsubmit="handleAdminAddTask(event)">
+                    <div class="form-group">
+                        <label>Tên Nhiệm Vụ (Ví dụ: Get Key VIP / Vượt Link)</label>
+                        <input type="text" id="adminNewTaskName" class="form-control" placeholder="Nhập tên nhiệm vụ..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả nhiệm vụ</label>
+                        <input type="text" id="adminNewTaskDesc" class="form-control" placeholder="Ví dụ: Vượt link 1s lấy mã..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Link Vượt / Get Key</label>
+                        <input type="text" id="adminNewTaskLink" class="form-control" placeholder="https://..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số Xu Thưởng (1 Xu = 300đ)</label>
+                        <input type="number" id="adminNewTaskCoins" class="form-control" value="10" min="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-gold submit-btn">Tạo Nhiệm Vụ Mới</button>
+                </form>
+            </div>
+
+            <div id="adminTab-edit-task" class="admin-pane">
+                <form onsubmit="handleAdminUpdateTask(event)">
+                    <div class="form-group">
+                        <label>Chọn nhiệm vụ cần sửa</label>
+                        <select id="adminSelectTask" class="form-control" onchange="loadTaskDataForAdmin()"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Link Nhiệm Vụ</label>
+                        <input type="text" id="adminTaskLink" class="form-control" placeholder="https://..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số Xu Thưởng</label>
+                        <input type="number" id="adminTaskCoins" class="form-control" placeholder="Nhập số xu..." min="1" required>
+                    </div>
+                    <div style="display:flex; gap:0.5rem; margin-top: 1rem;">
+                        <button type="submit" class="btn btn-primary submit-btn">Lưu Cập Nhật</button>
+                        <button type="button" class="btn btn-danger submit-btn" onclick="handleAdminDeleteTask()">Xóa Task</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="adminTab-files" class="admin-pane">
+                <form onsubmit="handleAdminAddFile(event)">
+                    <div class="form-group">
+                        <label>Phân loại File</label>
+                        <select id="adminFileType" class="form-control" onchange="togglePriceInput(this)">
+                            <option value="premium">File Bán (Premium)</option>
+                            <option value="free">File Miễn Phí (Free)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tên File / Sản phẩm</label>
+                        <input type="text" id="adminFileName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả ngắn</label>
+                        <input type="text" id="adminFileDesc" class="form-control" required>
+                    </div>
+                    <div class="form-group" id="adminPriceGroup">
+                        <label>Giá bán (VNĐ — sẽ quy đổi sang Xu, 1 Xu = 300đ)</label>
+                        <input type="number" id="adminFilePrice" class="form-control" value="10000">
+                    </div>
+                    <div class="form-group">
+                        <label>Link File (nơi tải/nhận file khi mua hoặc tải xong)</label>
+                        <input type="url" id="adminFileUrl" class="form-control" placeholder="https://..." required>
+                    </div>
+                    <button type="submit" class="btn btn-primary submit-btn">Đẩy File Lên Web</button>
+                </form>
+            </div>
+
+            <div id="adminTab-manage" class="admin-pane">
+                <p style="font-size: 0.75rem; color: var(--ink-soft); margin-bottom: 1rem;">Danh sách File đã đăng — xoá khỏi web tại đây.</p>
+                <div id="manageFileList">
+                    <div class="empty-state" style="padding: 1.5rem;"><p>Đang tải...</p></div>
+                </div>
+            </div>
+
+            <div id="adminTab-notice" class="admin-pane">
+                <form onsubmit="handleAdminNotice(event)">
+                    <div class="form-group">
+                        <label>Nội dung thông báo toàn hệ thống</label>
+                        <input type="text" id="adminNoticeText" class="form-control" placeholder="Thông báo tin mới..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Hiển thị</label>
+                        <select id="adminNoticeStatus" class="form-control">
+                            <option value="show">Bật thông báo</option>
+                            <option value="hide">Tắt thông báo</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-gold submit-btn">Phát Thông Báo</button>
+                </form>
+            </div>
+
+            <div id="adminTab-approvals" class="admin-pane">
+                <p style="font-size: 0.75rem; color: var(--ink-soft); margin-bottom: 1rem;">Duyệt tài khoản mới sau khi xác nhận qua Discord.</p>
+                <div id="approvalList">
+                    <div class="empty-state" style="padding: 1.5rem;"><p>Đang tải...</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART SIDEBAR -->
+    <div class="modal-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>Giỏ hàng</h3>
+            <button class="close-modal" style="position: static;" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-state"><p>Giỏ hàng đang trống.</p></div>
+        </div>
+        <div class="cart-footer">
+            <div class="coin-redeem-box">
+                <div>
+                    <p style="font-size:0.75rem;">Số dư: <strong id="cartCoinBalance">0 Xu</strong></p>
+                    <p style="font-size:0.75rem;">Đổi thành: <span id="cartCoinValue" style="color: var(--ink);">0 đ</span></p>
+                </div>
+                <button class="btn btn-outline" id="btnUseCoin" style="height:28px; font-size:0.75rem;">Dùng Xu</button>
+            </div>
+            <div class="cart-summary-line"><span>Tạm tính:</span><span id="cartSubtotal">0 đ</span></div>
+            <div class="cart-summary-line" id="coinDiscountRow" style="display: none; color: var(--gold-bright);"><span>Giảm giá Xu:</span><span id="coinDiscountAmount">-0 đ</span></div>
+            <div class="cart-total"><span>Tổng:</span><span id="cartTotal">0 đ</span></div>
+            <button class="btn btn-primary btn-lg submit-btn">Thanh toán ngay</button>
+        </div>
+    </div>
+
+    <!-- DISCORD PROMO TOAST -->
+    <div class="discord-toast" id="discordToast">
+        <button class="discord-toast-close" id="discordToastClose" aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button>
+        <div class="discord-toast-body">
+            <i class="fa-brands fa-discord"></i>
+            <div>
+                <p class="discord-toast-title">Tham gia Discord</p>
+                <p class="discord-toast-desc">Nhận key VIP, cập nhật mới &amp; được duyệt tài khoản nhanh hơn.</p>
+            </div>
+        </div>
+        <a href="https://discord.gg/SQQYWdvxmQ" target="_blank" rel="noopener" class="btn btn-gold discord-toast-cta">Tham gia ngay</a>
+    </div>
+
+    <!-- ==============================================================
+         SCRIPT A — DECORATIVE / INTERACTION LAYER
+         100% independent from Supabase. Never hides real content by
+         default — any "hidden until animated" state is applied by
+         this script itself, so if it fails to run for any reason,
+         nothing on the page disappears.
+         ============================================================== -->
+    <script>
+        (function () {
+            try {
+                var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                var pointerFine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+
+                // Navbar state on scroll
+                var header = document.querySelector('header');
+                if (header) {
+                    var onScroll = function () {
+                        if (window.scrollY > 12) header.classList.add('scrolled');
+                        else header.classList.remove('scrolled');
+                    };
+                    window.addEventListener('scroll', onScroll, { passive: true });
+                    onScroll();
+                }
+
+                // Safe scroll-reveal: we add the hidden class ourselves,
+                // right before observing — so a script failure never
+                // leaves content invisible.
+                if (!reduceMotion && 'IntersectionObserver' in window) {
+                    var targets = document.querySelectorAll('.reveal-target');
+                    targets.forEach(function (el) { el.classList.add('reveal-pending'); });
+                    var io = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('revealed');
+                                io.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.12 });
+                    targets.forEach(function (el) { io.observe(el); });
+                }
+
+                // Magnetic CTA
+                if (!reduceMotion && pointerFine) {
+                    document.querySelectorAll('.magnetic').forEach(function (btn) {
+                        btn.addEventListener('mousemove', function (e) {
+                            var r = btn.getBoundingClientRect();
+                            var x = e.clientX - r.left - r.width / 2;
+                            var y = e.clientY - r.top - r.height / 2;
+                            btn.style.transform = 'translate(' + (x * 0.25) + 'px,' + (y * 0.35) + 'px)';
+                        });
+                        btn.addEventListener('mouseleave', function () {
+                            btn.style.transform = 'translate(0,0)';
+                        });
+                    });
+                }
+
+                // Card tilt via event delegation (works for cards injected later by Supabase)
+                if (!reduceMotion && pointerFine) {
+                    ['productGrid', 'taskGrid', 'freeGrid'].forEach(function (id) {
+                        var grid = document.getElementById(id);
+                        if (!grid) return;
+                        grid.addEventListener('mousemove', function (e) {
+                            var card = e.target.closest('.card');
+                            if (!card) return;
+                            var r = card.getBoundingClientRect();
+                            var px = (e.clientX - r.left) / r.width - 0.5;
+                            var py = (e.clientY - r.top) / r.height - 0.5;
+                            card.style.transform = 'perspective(700px) rotateX(' + (py * -6) + 'deg) rotateY(' + (px * 6) + 'deg) translateY(-2px)';
+                        });
+                        grid.addEventListener('mouseleave', function (e) {
+                            var card = e.target.closest ? e.target.closest('.card') : null;
+                            grid.querySelectorAll('.card').forEach(function (c) { c.style.transform = ''; });
+                        }, true);
+                    });
+                }
+
+                // Cursor glow (very subtle, warm-tinted)
+                if (!reduceMotion && pointerFine) {
+                    var glow = document.getElementById('cursorGlow');
+                    var raf = null, mx = 0, my = 0;
+                    window.addEventListener('mousemove', function (e) {
+                        mx = e.clientX; my = e.clientY;
+                        if (glow && glow.style.opacity !== '1') glow.style.opacity = '1';
+                        if (raf) return;
+                        raf = requestAnimationFrame(function () {
+                            if (glow) glow.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
+                            raf = null;
+                        });
+                    }, { passive: true });
+                }
+
+                // Discord promo toast — appears once per session after a random delay
+                var toast = document.getElementById('discordToast');
+                var toastClose = document.getElementById('discordToastClose');
+                if (toast && !sessionStorage.getItem('junstore_discord_toast_dismissed')) {
+                    var delay = 6000 + Math.random() * 12000; // 6s–18s
+                    var toastTimer = setTimeout(function () {
+                        toast.classList.add('show');
+                    }, delay);
+                    if (toastClose) {
+                        toastClose.addEventListener('click', function () {
+                            clearTimeout(toastTimer);
+                            toast.classList.remove('show');
+                            try { sessionStorage.setItem('junstore_discord_toast_dismissed', '1'); } catch (e) {}
+                        });
+                    }
+                }
+            } catch (err) {
+                console.error('Decorative interaction layer lỗi (không ảnh hưởng chức năng chính):', err);
+            }
+        })();
+    </script>
+
+    <!-- ==============================================================
+         SCRIPT B — SUPABASE INTEGRATION
+         ============================================================== -->
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const COIN_RATE = 300; 
+        const SUPABASE_URL = "https://googqjctcleadtnyqehc.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_vnF2VzeG_PKYy-6CBChEGg_Z1KBTdvv";
+        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+        const TURNSTILE_VERIFY_URL = SUPABASE_URL + "/functions/v1/verify-turnstile";
+
+        // NEW: calls the Supabase Edge Function, which calls Cloudflare's
+        // siteverify with the secret key server-side. The browser never
+        // talks to challenges.cloudflare.com/turnstile/v0/siteverify directly.
+        // Includes the publishable key because "Verify JWT" is on for this
+        // function in the Supabase dashboard (the anon/publishable key satisfies it).
+        async function verifyTurnstile(token, action) {
+            try {
+                const res = await fetch(TURNSTILE_VERIFY_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + SUPABASE_KEY,
+                        "apikey": SUPABASE_KEY,
+                    },
+                    body: JSON.stringify({ token, action }),
+                });
+                const data = await res.json();
+                return data.verified === true;
+            } catch (err) {
+                console.error("Không gọi được verify-turnstile:", err);
+                return false;
+            }
+        }
+
+        let products = [];
+        let tasks = [];
+        let freeResources = [];
+        let currentUser = null;
+
+        async function checkRememberedUser() {
+            const savedUser = localStorage.getItem('junstore_user');
+            if (savedUser) {
+                try {
+                    currentUser = JSON.parse(savedUser);
+                    updateUserUI();
+                    // Re-check status against the database — a ban applied
+                    // after this session was saved must still take effect.
+                    if (currentUser && currentUser.id) {
+                        const { data: freshUser } = await supabase
+                            .from('users')
+                            .select('id, username, coins, is_admin, status, discord, phone')
+                            .eq('id', currentUser.id)
+                            .single();
+                        if (freshUser && freshUser.status === 'banned') {
+                            currentUser = null;
+                            localStorage.removeItem('junstore_user');
+                            updateUserUI();
+                            alert("Tài khoản này đã bị khoá.");
+                        } else if (freshUser) {
+                            currentUser = freshUser;
+                            localStorage.setItem('junstore_user', JSON.stringify(freshUser));
+                            updateUserUI();
+                        }
+                    }
+                } catch (e) {
+                    localStorage.removeItem('junstore_user');
+                }
+            }
+        }
+
+        function updateUserUI() {
+            if (currentUser) {
+                const pendingTag = (!currentUser.is_admin && currentUser.status === 'pending') ? ' (Chờ duyệt)' : '';
+                document.getElementById("userStatus").innerText = currentUser.username + pendingTag;
+                document.getElementById("userCoins").innerText = currentUser.coins || 0;
+                if (currentUser.is_admin === true) {
+                    document.getElementById("btnAdminPanel").style.display = "inline-flex";
+                } else {
+                    document.getElementById("btnAdminPanel").style.display = "none";
+                }
+            } else {
+                document.getElementById("userStatus").innerText = "Đăng nhập";
+                document.getElementById("userCoins").innerText = "0";
+                document.getElementById("btnAdminPanel").style.display = "none";
+            }
+        }
+
+        window.handleAuthButtonClick = function() {
+            if (currentUser) {
+                if (confirm(`Bạn có muốn đăng xuất khỏi tài khoản ${currentUser.username}?`)) {
+                    currentUser = null;
+                    localStorage.removeItem('junstore_user');
+                    updateUserUI();
+                }
+            } else {
+                window.openLoginModal();
+            }
+        };
+
+        async function fetchProducts() {
+            const { data } = await supabase.from('products').select('*');
+            if (data) products = data;
+            renderProducts();
+        }
+
+        async function fetchTasks() {
+            const { data } = await supabase.from('tasks').select('*');
+            if (data) tasks = data;
+            renderTasks();
+        }
+
+        async function fetchFreeResources() {
+            const { data } = await supabase.from('free_resources').select('*');
+            if (data) freeResources = data;
+            renderFreeResources();
+        }
+
+        // NEW: Top Xu leaderboard — read-only, only username + coins (never password)
+        async function fetchTopUsers() {
+            const { data } = await supabase
+                .from('users')
+                .select('username, coins')
+                .order('coins', { ascending: false })
+                .limit(5);
+            renderTopUsers(data || []);
+        }
+
+        window.renderProducts = function() {
+            const grid = document.getElementById("productGrid");
+            if (!grid) return;
+            if (products.length === 0) {
+                grid.innerHTML = `<div class="empty-state"><p>Chưa có sản phẩm nào.</p></div>`;
+                return;
+            }
+            grid.innerHTML = products.map(p => `
+                <div class="card">
+                    <span class="tag premium">${p.badge || 'Premium'}</span>
+                    <h3 class="card-title">${p.name}</h3>
+                    <p class="card-desc">${p.description || ''}</p>
+                    <div class="card-footer">
+                        <div class="price">${Number(p.price).toLocaleString('vi-VN')} đ</div>
+                        <button class="btn btn-outline" onclick="handleRedeemProduct(${p.id}, ${p.price})">Mua bằng Xu</button>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        window.renderTasks = function() {
+            const grid = document.getElementById("taskGrid");
+            if (!grid) return;
+            if (tasks.length === 0) {
+                grid.innerHTML = `<div class="empty-state"><p>Chưa có nhiệm vụ nào.</p></div>`;
+                return;
+            }
+            grid.innerHTML = tasks.map(t => `
+                <div class="card">
+                    <span class="tag task">Nhiệm vụ Xu</span>
+                    <h3 class="card-title">${t.name}</h3>
+                    <p class="card-desc">${t.description || ''}</p>
+                    <div class="card-footer">
+                        <div class="price reward"><i class="fa-solid fa-coins"></i> +${t.reward_coins || 0} Xu</div>
+                        <button class="btn btn-gold" onclick="handleDoTask(${t.id}, '${t.link}')">Làm ngay</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            const select = document.getElementById("adminSelectTask");
+            if (select) {
+                select.innerHTML = tasks.map(t => `<option value="${t.id}">${t.name} (+${t.reward_coins || 0} Xu)</option>`).join('');
+                window.loadTaskDataForAdmin();
+            }
+        };
+
+        window.renderFreeResources = function() {
+            const grid = document.getElementById("freeGrid");
+            if (!grid) return;
+            if (freeResources.length === 0) {
+                grid.innerHTML = `<div class="empty-state"><p>Chưa có file miễn phí nào.</p></div>`;
+                return;
+            }
+            grid.innerHTML = freeResources.map(p => `
+                <div class="card">
+                    <span class="tag free">${p.badge || 'Free'}</span>
+                    <h3 class="card-title">${p.name}</h3>
+                    <p class="card-desc">${p.description || ''}</p>
+                    <div class="card-footer">
+                        <span class="price free">Miễn phí</span>
+                        <button class="btn btn-outline" onclick="handleDownloadFree('${p.file_url || ''}')">Tải Ngay</button>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        // NEW: renders the Top Xu leaderboard
+        window.renderTopUsers = function(items) {
+            const el = document.getElementById("topXuList");
+            if (!el) return;
+            if (!items || items.length === 0) {
+                el.innerHTML = `<div class="empty-state" style="padding: 1.25rem 1rem;"><p>Chưa có dữ liệu.</p></div>`;
+                return;
+            }
+            el.innerHTML = items.map((u, i) => `
+                <div class="top-row">
+                    <span class="top-rank">${String(i + 1).padStart(2, '0')}</span>
+                    <span class="top-name">${u.username}</span>
+                    <span class="top-coins"><i class="fa-solid fa-coins"></i> ${u.coins || 0}</span>
+                </div>
+            `).join('');
+        };
+
+        // NEW: account-approval gate used by tasks, free downloads, and add-to-cart
+        function isApproved() {
+            if (!currentUser) return false;
+            if (currentUser.is_admin === true) return true;
+            return currentUser.status === 'approved';
+        }
+
+        window.handleDoTask = function(taskId, link) {
+            if (!currentUser) {
+                alert("Vui lòng đăng nhập để làm nhiệm vụ.");
+                window.openLoginModal();
+                return;
+            }
+            if (!isApproved()) {
+                alert("Tài khoản của bạn chưa được Admin duyệt. Vui lòng liên hệ Discord: https://discord.gg/SQQYWdvxmQ để được xét duyệt.");
+                return;
+            }
+            window.open(link, '_blank');
+        };
+
+        window.handleDownloadFree = function(fileUrl) {
+            if (!currentUser) {
+                alert("Vui lòng đăng nhập để tải File.");
+                window.openLoginModal();
+                return;
+            }
+            if (!isApproved()) {
+                alert("Tài khoản của bạn chưa được Admin duyệt. Vui lòng liên hệ Discord: https://discord.gg/SQQYWdvxmQ để được xét duyệt.");
+                return;
+            }
+            if (!fileUrl) {
+                alert("File này chưa có link tải. Liên hệ Admin.");
+                return;
+            }
+            window.open(fileUrl, '_blank');
+        };
+
+        window.handleRedeemProduct = async function(productId, priceVnd) {
+            if (!currentUser) {
+                alert("Vui lòng đăng nhập để mua File.");
+                window.openLoginModal();
+                return;
+            }
+            if (!isApproved()) {
+                alert("Tài khoản của bạn chưa được Admin duyệt. Vui lòng liên hệ Discord: https://discord.gg/SQQYWdvxmQ để được xét duyệt.");
+                return;
+            }
+
+            const requiredCoins = Math.ceil(Number(priceVnd) / COIN_RATE);
+            if (!confirm(`Mua File này tốn ${requiredCoins} Xu. Xác nhận mua?`)) return;
+
+            const passwordConfirm = prompt("Nhập lại mật khẩu để xác nhận mua:");
+            if (!passwordConfirm) return;
+
+            let data;
+            try {
+                const res = await fetch(SUPABASE_URL + "/functions/v1/redeem-product", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + SUPABASE_KEY,
+                        "apikey": SUPABASE_KEY,
+                    },
+                    body: JSON.stringify({ username: currentUser.username, password: passwordConfirm, productId }),
+                });
+                data = await res.json();
+            } catch (err) {
+                console.error("handleRedeemProduct: could not reach redeem-product:", err);
+                alert("Không thể kết nối tới server. Vui lòng thử lại.");
+                return;
+            }
+
+            if (!data.ok) {
+                if (data.error === 'invalid_credentials') alert("Mật khẩu không đúng.");
+                else if (data.error === 'insufficient_coins') alert(`Không đủ Xu. Cần ${data.required} Xu, bạn có ${data.have} Xu.`);
+                else if (data.error === 'banned') alert("Tài khoản đã bị khoá.");
+                else if (data.error === 'not_approved') alert("Tài khoản chưa được duyệt.");
+                else alert("Lỗi: " + (data.error || "không xác định"));
+                return;
+            }
+
+            currentUser.coins = data.remainingCoins;
+            localStorage.setItem('junstore_user', JSON.stringify(currentUser));
+            updateUserUI();
+            alert(`Mua thành công! Còn lại ${data.remainingCoins} Xu.`);
+            window.open(data.file_url, '_blank');
+        };
+
+        // NEW: admin — pending account approvals
+        async function fetchPendingApprovals() {
+            const { data } = await supabase
+                .from('users')
+                .select('id, username, discord, phone')
+                .eq('status', 'pending')
+                .order('id', { ascending: true });
+            renderApprovals(data || []);
+        }
+
+        window.renderApprovals = function(items) {
+            const el = document.getElementById("approvalList");
+            if (!el) return;
+            if (items.length === 0) {
+                el.innerHTML = `<div class="empty-state" style="padding: 1.5rem;"><p>Không có yêu cầu nào đang chờ duyệt.</p></div>`;
+                return;
+            }
+            el.innerHTML = items.map(u => `
+                <div class="approval-row">
+                    <div>
+                        <div class="approval-name">${u.username}</div>
+                        <div class="approval-discord"><i class="fa-brands fa-discord"></i> ${u.discord || 'Chưa cung cấp'}</div>
+                        <div class="approval-discord"><i class="fa-solid fa-phone"></i> ${u.phone || 'Chưa cung cấp'}</div>
+                    </div>
+                    <div style="display:flex; gap:0.5rem; flex-wrap: wrap;">
+                        <button class="btn btn-gold" onclick="handleApproveUser(${u.id})">Duyệt</button>
+                        <button class="btn btn-danger" onclick="handleRejectUser(${u.id})">Từ chối</button>
+                        <button class="btn btn-outline" style="border-color: var(--danger-dim); color: var(--danger);" onclick="handleBanUser(${u.id})">Khoá TK</button>
+                        <button class="btn btn-danger" onclick="handleDeleteByDiscord(${u.id})"><i class="fa-solid fa-trash"></i> Xoá (trùng Discord)</button>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        // NEW: admin password is cached in memory only (never localStorage)
+        // for this page session, so the admin isn't re-prompted on every click.
+        let adminPasswordCache = null;
+
+        async function callAdminManageUser(action, targetUserId) {
+            if (!currentUser) {
+                alert("Vui lòng đăng nhập bằng tài khoản Admin.");
+                return { ok: false };
+            }
+            if (!adminPasswordCache) {
+                adminPasswordCache = prompt("Xác nhận mật khẩu Admin:");
+                if (!adminPasswordCache) return { ok: false };
+            }
+
+            let data;
+            try {
+                const res = await fetch(SUPABASE_URL + "/functions/v1/admin-manage-user", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + SUPABASE_KEY,
+                        "apikey": SUPABASE_KEY,
+                    },
+                    body: JSON.stringify({
+                        adminUsername: currentUser.username,
+                        adminPassword: adminPasswordCache,
+                        action,
+                        targetUserId,
+                    }),
+                });
+                data = await res.json();
+            } catch (err) {
+                console.error("callAdminManageUser: could not reach admin-manage-user:", err);
+                alert("Không thể kết nối tới server. Vui lòng thử lại.");
+                return { ok: false };
+            }
+
+            if (data.error === 'not_admin') {
+                alert("Mật khẩu Admin không đúng. Thử lại.");
+                adminPasswordCache = null;
+            }
+            return data;
+        }
+
+        window.handleApproveUser = async function(userId) {
+            const data = await callAdminManageUser('approve', userId);
+            if (data.ok) { alert("Đã duyệt tài khoản!"); fetchPendingApprovals(); }
+            else if (data.error && data.error !== 'not_admin') { alert("Lỗi: " + data.error); }
+        };
+
+        window.handleRejectUser = async function(userId) {
+            if (!confirm("Từ chối yêu cầu này?")) return;
+            const data = await callAdminManageUser('reject', userId);
+            if (data.ok) { alert("Đã từ chối yêu cầu!"); fetchPendingApprovals(); }
+            else if (data.error && data.error !== 'not_admin') { alert("Lỗi: " + data.error); }
+        };
+
+        // Fully lock an account — banned accounts cannot log in at all
+        window.handleBanUser = async function(userId) {
+            if (!confirm("Khoá tài khoản này? Tài khoản sẽ không thể đăng nhập được nữa.")) return;
+            const data = await callAdminManageUser('ban', userId);
+            if (data.ok) { alert("Đã khoá tài khoản!"); fetchPendingApprovals(); }
+            else if (data.error && data.error !== 'not_admin') { alert("Lỗi: " + data.error); }
+        };
+
+        // Deletes this account AND every other account sharing the same
+        // Discord value (any status — pending, approved, rejected, banned).
+        window.handleDeleteByDiscord = async function(userId) {
+            if (!confirm(`Xoá tài khoản này VÀ mọi tài khoản khác cùng Discord? Hành động này không thể hoàn tác.`)) return;
+            const data = await callAdminManageUser('delete_by_discord', userId);
+            if (data.ok) { alert("Đã xoá xong!"); fetchPendingApprovals(); }
+            else if (data.error === 'no_discord') { alert("Tài khoản này chưa có Discord, không thể xoá theo Discord."); }
+            else if (data.error && data.error !== 'not_admin') { alert("Lỗi: " + data.error); }
+        };
+
+        window.handleLogin = async function(e) {
+            e.preventDefault();
+            const turnstileContainer = document.getElementById('turnstileLogin');
+            const turnstileToken = turnstileContainer ? turnstileContainer.querySelector('input[name="cf-turnstile-response"]')?.value : '';
+            if (!turnstileToken) {
+                alert("Vui lòng xác minh Cloudflare Turnstile trước khi đăng nhập.");
+                return;
+            }
+
+            const verified = await verifyTurnstile(turnstileToken, 'login');
+            try { if (window.turnstile) window.turnstile.reset(turnstileContainer); } catch (err) {}
+            if (!verified) {
+                alert("Xác minh Cloudflare Turnstile thất bại. Vui lòng thử lại.");
+                return;
+            }
+
+            const usernameInput = document.getElementById("loginUsername").value.trim();
+            const passwordInput = document.getElementById("loginPassword").value.trim();
+            const rememberMe = document.getElementById("rememberMe").checked;
+
+            let data;
+            try {
+                const res = await fetch(SUPABASE_URL + "/functions/v1/login-user", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + SUPABASE_KEY,
+                        "apikey": SUPABASE_KEY,
+                    },
+                    body: JSON.stringify({ username: usernameInput, password: passwordInput }),
+                });
+                data = await res.json();
+            } catch (err) {
+                console.error("handleLogin: could not reach login-user:", err);
+                alert("Không thể kết nối tới server. Vui lòng thử lại.");
+                return;
+            }
+
+            if (!data.ok) {
+                if (data.error === 'banned') {
+                    alert("Tài khoản này đã bị khoá. Liên hệ Discord: https://discord.gg/SQQYWdvxmQ nếu bạn cho rằng đây là nhầm lẫn.");
+                } else {
+                    alert("Tên đăng nhập hoặc mật khẩu không đúng!");
+                }
+                return;
+            }
+
+            const user = data.user;
+            currentUser = user;
+            if (rememberMe) {
+                localStorage.setItem('junstore_user', JSON.stringify(user));
+            } else {
+                localStorage.removeItem('junstore_user');
+            }
+
+            updateUserUI();
+            alert("Đăng nhập thành công!");
+            window.closeLoginModal();
+        };
+
+        window.handleRegister = async function(e) {
+            e.preventDefault();
+            const turnstileContainer = document.getElementById('turnstileRegister');
+            const turnstileToken = turnstileContainer ? turnstileContainer.querySelector('input[name="cf-turnstile-response"]')?.value : '';
+            if (!turnstileToken) {
+                alert("Vui lòng xác minh Cloudflare Turnstile trước khi tạo tài khoản.");
+                return;
+            }
+
+            const username = document.getElementById("regUsername").value.trim();
+            const password = document.getElementById("regPassword").value.trim();
+            const confirm = document.getElementById("regPasswordConfirm").value.trim();
+            const discord = document.getElementById("regDiscord").value.trim();
+            const phone = document.getElementById("regPhone").value.trim();
+
+            if (password !== confirm) {
+                alert("Mật khẩu xác nhận không trùng khớp!");
+                return;
+            }
+
+            let data;
+            try {
+                const res = await fetch(SUPABASE_URL + "/functions/v1/register-user", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + SUPABASE_KEY,
+                        "apikey": SUPABASE_KEY,
+                    },
+                    body: JSON.stringify({ username, password, discord, phone, turnstileToken }),
+                });
+                data = await res.json();
+            } catch (err) {
+                console.error("handleRegister: could not reach register-user:", err);
+                try { if (window.turnstile) window.turnstile.reset(turnstileContainer); } catch (e2) {}
+                alert("Không thể kết nối tới server. Vui lòng thử lại.");
+                return;
+            }
+
+            try { if (window.turnstile) window.turnstile.reset(turnstileContainer); } catch (err) {}
+
+            if (data.ok) {
+                alert("Tạo tài khoản thành công! Vui lòng chờ Admin duyệt qua Discord trước khi làm nhiệm vụ hoặc tải File.");
+                switchAuthTab('login', document.querySelectorAll("#loginModal .tab-btn")[0]);
+                return;
+            }
+
+            if (data.error === "username_taken") {
+                alert("Tên đăng nhập đã tồn tại!");
+            } else if (data.error === "discord_taken") {
+                alert("Discord này đã được dùng để xin duyệt trước đó. Mỗi Discord chỉ được xin duyệt 1 lần duy nhất.");
+            } else if (data.error === "phone_taken") {
+                alert("Số điện thoại này đã được dùng để xin duyệt trước đó. Mỗi số chỉ được xin duyệt 1 lần duy nhất.");
+            } else if (data.error === "queue_full") {
+                alert("Xét duyệt quá nhiều, hãy đợi.");
+            } else if (data.error === "verification_failed" || data.error === "siteverify_unreachable") {
+                alert("Xác minh Cloudflare Turnstile thất bại. Vui lòng thử lại.");
+            } else {
+                alert("Lỗi: " + (data.error || "không xác định"));
+            }
+        };
+
+        window.handleAdminAddTask = async function(e) {
+            e.preventDefault();
+            const name = document.getElementById("adminNewTaskName").value.trim();
+            const description = document.getElementById("adminNewTaskDesc").value.trim();
+            const link = document.getElementById("adminNewTaskLink").value.trim();
+            const reward_coins = parseInt(document.getElementById("adminNewTaskCoins").value);
+
+            const { error } = await supabase
+                .from('tasks')
+                .insert([{ name, description, link, reward_coins, badge: `+${reward_coins * COIN_RATE}đ` }]);
+
+            if (!error) {
+                alert("Thêm nhiệm vụ thành công!");
+                e.target.reset();
+                fetchTasks();
+            } else {
+                alert("Lỗi: " + error.message);
+            }
+        };
+
+        window.loadTaskDataForAdmin = function() {
+            const select = document.getElementById("adminSelectTask");
+            if (!select || !select.value) return;
+            const task = tasks.find(t => t.id == select.value);
+            if (task) {
+                document.getElementById("adminTaskLink").value = task.link || '';
+                document.getElementById("adminTaskCoins").value = task.reward_coins || 0;
+            }
+        };
+
+        window.handleAdminUpdateTask = async function(e) {
+            e.preventDefault();
+            const taskId = document.getElementById("adminSelectTask").value;
+            const newLink = document.getElementById("adminTaskLink").value.trim();
+            const newCoins = parseInt(document.getElementById("adminTaskCoins").value);
+
+            if (!taskId) {
+                alert("Vui lòng chọn nhiệm vụ cần sửa!");
+                return;
+            }
+
+            const { error } = await supabase
+                .from('tasks')
+                .update({ 
+                    link: newLink, 
+                    reward_coins: newCoins,
+                    badge: `+${newCoins * COIN_RATE}đ`
+                })
+                .eq('id', taskId);
+
+            if (!error) {
+                alert("Cập nhật nhiệm vụ thành công!");
+                fetchTasks();
+            } else {
+                alert("Lỗi cập nhật: " + error.message);
+            }
+        };
+
+        window.handleAdminDeleteTask = async function() {
+            const taskId = document.getElementById("adminSelectTask").value;
+            if (!taskId) return;
+            if (confirm("Bạn có chắc chắn muốn xóa nhiệm vụ này?")) {
+                const { error } = await supabase.from('tasks').delete().eq('id', taskId);
+                if (!error) {
+                    alert("Đã xóa nhiệm vụ!");
+                    fetchTasks();
+                } else {
+                    alert("Lỗi: " + error.message);
+                }
+            }
+        };
+
+        window.handleAdminAddFile = async function(e) {
+            e.preventDefault();
+            const type = document.getElementById("adminFileType").value;
+            const name = document.getElementById("adminFileName").value;
+            const description = document.getElementById("adminFileDesc").value;
+            const file_url = document.getElementById("adminFileUrl").value;
+
+            if (type === "premium") {
+                const price = parseInt(document.getElementById("adminFilePrice").value);
+                const { error } = await supabase.from('products').insert([{ name, category: "all", price, badge: "Premium", description, file_url }]);
+                if (!error) { alert("Đã thêm File Premium!"); fetchProducts(); fetchManageList(); }
+                else { alert("Lỗi: " + error.message); }
+            } else {
+                const { error } = await supabase.from('free_resources').insert([{ name, badge: "Free", description, file_url }]);
+                if (!error) { alert("Đã thêm File Miễn Phí!"); fetchFreeResources(); fetchManageList(); }
+                else { alert("Lỗi: " + error.message); }
+            }
+            e.target.reset();
+        };
+
+        // NEW: list + delete uploaded products/free resources from the admin panel
+        async function fetchManageList() {
+            const { data: prods } = await supabase.from('products').select('id, name, price').order('id', { ascending: false });
+            const { data: frees } = await supabase.from('free_resources').select('id, name').order('id', { ascending: false });
+            renderManageList(prods || [], frees || []);
+        }
+
+        window.renderManageList = function(prods, frees) {
+            const el = document.getElementById("manageFileList");
+            if (!el) return;
+            if (prods.length === 0 && frees.length === 0) {
+                el.innerHTML = `<div class="empty-state" style="padding: 1.5rem;"><p>Chưa có File nào.</p></div>`;
+                return;
+            }
+            const prodRows = prods.map(p => `
+                <div class="approval-row">
+                    <div>
+                        <div class="approval-name">${p.name}</div>
+                        <div class="approval-discord">Premium &middot; ${Number(p.price).toLocaleString('vi-VN')} đ</div>
+                    </div>
+                    <button class="btn btn-danger" onclick="handleDeleteProduct(${p.id})">Xoá</button>
+                </div>
+            `).join('');
+            const freeRows = frees.map(f => `
+                <div class="approval-row">
+                    <div>
+                        <div class="approval-name">${f.name}</div>
+                        <div class="approval-discord">Free</div>
+                    </div>
+                    <button class="btn btn-danger" onclick="handleDeleteFree(${f.id})">Xoá</button>
+                </div>
+            `).join('');
+            el.innerHTML = prodRows + freeRows;
+        };
+
+        window.handleDeleteProduct = async function(id) {
+            if (!confirm("Xoá File Premium này khỏi web?")) return;
+            const { error } = await supabase.from('products').delete().eq('id', id);
+            if (!error) { alert("Đã xoá!"); fetchProducts(); fetchManageList(); }
+            else { alert("Lỗi: " + error.message); }
+        };
+
+        window.handleDeleteFree = async function(id) {
+            if (!confirm("Xoá File Miễn Phí này khỏi web?")) return;
+            const { error } = await supabase.from('free_resources').delete().eq('id', id);
+            if (!error) { alert("Đã xoá!"); fetchFreeResources(); fetchManageList(); }
+            else { alert("Lỗi: " + error.message); }
+        };
+
+        window.handleAdminNotice = function(e) {
+            e.preventDefault();
+            const text = document.getElementById("adminNoticeText").value;
+            const status = document.getElementById("adminNoticeStatus").value;
+            const alertBox = document.getElementById("globalAlert");
+
+            if (status === "show") {
+                alertBox.innerText = `📢 Thông báo Admin: ${text}`;
+                alertBox.style.display = "block";
+            } else {
+                alertBox.style.display = "none";
+            }
+            alert("Đã cập nhật thông báo!");
+        };
+
+        window.switchAuthTab = function(tabName, btnElement) {
+            document.querySelectorAll("#loginModal .tab-btn").forEach(btn => btn.classList.remove("active"));
+            btnElement.classList.add("active");
+            document.querySelectorAll(".auth-pane").forEach(pane => pane.classList.remove("active"));
+            document.getElementById(`authPane-${tabName}`).classList.add("active");
+        };
+
+        window.switchAdminTab = function(tabName, btnElement) {
+            document.querySelectorAll("#adminModal .tab-btn").forEach(btn => btn.classList.remove("active"));
+            btnElement.classList.add("active");
+            document.querySelectorAll(".admin-pane").forEach(pane => pane.classList.remove("active"));
+            document.getElementById(`adminTab-${tabName}`).classList.add("active");
+        };
+
+        window.openLoginModal = () => document.getElementById("loginModal").classList.add("show");
+        window.closeLoginModal = () => document.getElementById("loginModal").classList.remove("show");
+        window.openAdminModal = () => { document.getElementById("adminModal").classList.add("show"); fetchPendingApprovals(); fetchManageList(); };
+        window.closeAdminModal = () => document.getElementById("adminModal").classList.remove("show");
+        window.toggleCart = () => {
+            document.getElementById("cartDrawer").classList.toggle("open");
+            document.getElementById("cartOverlay").classList.toggle("show");
+        };
+
+        window.togglePriceInput = function(selectElem) {
+            document.getElementById("adminPriceGroup").style.display = selectElem.value === "premium" ? "block" : "none";
+        };
+
+        window.scrollToSection = function(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        };
+
+        checkRememberedUser();
+        fetchProducts();
+        fetchTasks();
+        fetchFreeResources();
+        fetchTopUsers();
+    </script>
+</body>
+</html>
