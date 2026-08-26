@@ -41,12 +41,17 @@
             --radius-sm: 6px;
             --radius-md: 10px;
             --radius-lg: 16px;
+            --radius-xl: 22px;
 
             --font-display: 'Playfair Display', serif;
             --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
             --font-mono: 'JetBrains Mono', 'Space Mono', monospace;
 
             --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            --glass: rgba(22, 23, 30, 0.55);
+            --glass-border: rgba(243, 241, 234, 0.08);
         }
 
         * {
@@ -75,6 +80,7 @@
             flex-direction: column;
             overflow-x: hidden;
             position: relative;
+            z-index: 0;
             animation: pageFade 0.7s var(--ease) both;
         }
         @keyframes pageFade { from { opacity: 0; } to { opacity: 1; } }
@@ -86,6 +92,46 @@
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
             opacity: 0.035;
             mix-blend-mode: overlay;
+        }
+
+        /* ==============================================================
+           AMBIENT MESH — fixed, whole-page gradient wash behind all
+           content. Purely decorative (z-index below everything, no
+           pointer events); reinforces the "premium platform" depth.
+           ============================================================== */
+        .bg-mesh {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+        }
+        .bg-mesh span {
+            position: absolute; border-radius: 50%; filter: blur(120px); will-change: transform;
+            animation: meshDrift 34s ease-in-out infinite;
+        }
+        .bg-mesh span:nth-child(1) { width: 46vw; height: 46vw; max-width: 620px; max-height: 620px; background: radial-gradient(circle, rgba(201, 161, 90, 0.16), transparent 68%); top: -14vw; left: -10vw; }
+        .bg-mesh span:nth-child(2) { width: 38vw; height: 38vw; max-width: 520px; max-height: 520px; background: radial-gradient(circle, rgba(99, 230, 212, 0.08), transparent 68%); bottom: -12vw; right: -8vw; animation-duration: 40s; animation-delay: -8s; }
+        .bg-mesh span:nth-child(3) { width: 30vw; height: 30vw; max-width: 420px; max-height: 420px; background: radial-gradient(circle, rgba(154, 162, 173, 0.09), transparent 68%); top: 40%; left: 50%; animation-duration: 46s; animation-delay: -20s; }
+        @keyframes meshDrift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(4vw, 3vw) scale(1.08); }
+            66% { transform: translate(-3vw, 4vw) scale(0.96); }
+        }
+
+        /* faint structural grid — the "engineered platform" cue,
+           masked so it fades toward the edges instead of hard-cropping */
+        .bg-grid {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(243, 241, 234, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(243, 241, 234, 0.035) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 75%);
+        }
+
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; height: 2px; width: 100%; z-index: 101;
+            background: linear-gradient(90deg, var(--gold), var(--gold-bright), var(--neon));
+            transform: scaleX(0); transform-origin: 0 50%;
+            transition: transform 0.1s linear;
         }
 
         ::selection { background: var(--gold); color: #17130a; }
@@ -105,24 +151,32 @@
            HEADER
            ============================================================== */
         header {
-            background: rgba(7, 8, 11, 0.72);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: rgba(7, 8, 11, 0.6);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
             position: sticky;
             top: 0;
             z-index: 100;
             border-bottom: 1px solid var(--hairline);
             padding: 0 1rem;
-            height: 60px;
+            height: 64px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.4s var(--ease), border-color 0.4s var(--ease), height 0.4s var(--ease);
+            transition: background 0.4s var(--ease), border-color 0.4s var(--ease), height 0.4s var(--ease), box-shadow 0.4s var(--ease);
+        }
+        header::after {
+            content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 161, 90, 0.55), transparent);
+            opacity: 0; transition: opacity 0.4s var(--ease);
         }
         header.scrolled {
-            background: rgba(7, 8, 11, 0.92);
-            border-color: var(--hairline-hover);
+            background: rgba(7, 8, 11, 0.86);
+            border-color: transparent;
+            height: 58px;
+            box-shadow: 0 20px 50px -30px rgba(0, 0, 0, 0.8);
         }
+        header.scrolled::after { opacity: 1; }
 
         #globalAlert {
             background: linear-gradient(90deg, var(--gold), var(--gold-bright));
@@ -137,20 +191,30 @@
             z-index: 99;
         }
 
-        .logo { text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: 0.6rem; }
+        .logo { text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: 0.65rem; transition: opacity 0.25s var(--ease); }
+        .logo:hover { opacity: 0.85; }
         .badge-mark {
-            width: 30px; height: 30px; position: relative; border: 1px solid var(--gold);
+            width: 32px; height: 32px; position: relative; border: 1px solid var(--gold);
             display: flex; align-items: center; justify-content: center; overflow: hidden;
-            font-family: var(--font-display); font-weight: 800; font-size: 0.85rem; color: var(--ink);
-            flex-shrink: 0;
+            font-family: var(--font-display); font-weight: 800; font-size: 0.9rem; color: var(--ink);
+            flex-shrink: 0; border-radius: 7px;
+            box-shadow: 0 0 0 0 rgba(201, 161, 90, 0.4);
+            transition: box-shadow 0.4s var(--ease);
         }
+        .logo:hover .badge-mark { box-shadow: 0 0 18px 1px rgba(201, 161, 90, 0.35); }
         .badge-mark::after {
             content: ''; position: absolute; left: -60%; top: 0; width: 55%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(99, 230, 212, 0.55), transparent);
             animation: scan 3.6s ease-in-out infinite;
         }
         @keyframes scan { 0% { left: -60%; } 100% { left: 120%; } }
-        .logo .word { font-family: var(--font-body); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; }
+        .logo .word {
+            font-family: var(--font-body); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em;
+            background: linear-gradient(100deg, var(--ink) 40%, var(--gold-bright) 50%, var(--ink) 60%);
+            background-size: 240% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: logoShine 7s ease-in-out infinite;
+        }
+        @keyframes logoShine { 0%, 100% { background-position: 200% 0; } 50% { background-position: 0% 0; } }
 
         .nav-links { display: none; gap: 1.4rem; list-style: none; }
         .nav-links a {
@@ -173,7 +237,11 @@
             height: 32px; padding: 0 0.6rem; border-radius: var(--radius-sm);
             font-size: 0.75rem; font-family: var(--font-mono); font-weight: 700;
             display: inline-flex; align-items: center; gap: 0.35rem;
+            transition: box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
         }
+        .coin-balance:hover { box-shadow: 0 0 0 3px rgba(201, 161, 90, 0.1); border-color: rgba(201, 161, 90, 0.5); }
+        .coin-balance i { animation: coinSpin 5s linear infinite; }
+        @keyframes coinSpin { 0%, 92%, 100% { transform: rotateY(0deg); } 96% { transform: rotateY(180deg); } }
 
         /* ==============================================================
            BUTTONS
@@ -183,16 +251,27 @@
             font-weight: 500; font-size: 0.8rem; cursor: pointer; transition: all 0.25s var(--ease);
             display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
             border: 1px solid transparent; text-decoration: none; white-space: nowrap;
+            position: relative; overflow: hidden;
         }
         .btn-outline { background: transparent; color: var(--ink); border-color: var(--hairline); }
-        .btn-outline:hover { background: var(--panel); border-color: var(--hairline-hover); }
+        .btn-outline:hover { background: var(--panel); border-color: var(--hairline-hover); transform: translateY(-1px); }
         .btn-primary { background: var(--ink); color: var(--void); font-weight: 600; }
-        .btn-primary:hover { background: var(--gold-bright); }
+        .btn-primary:hover { background: var(--gold-bright); transform: translateY(-1px); box-shadow: 0 10px 24px -10px rgba(231, 197, 131, 0.5); }
         .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-bright)); color: #1a1207; font-weight: 700; }
-        .btn-gold:hover { filter: brightness(1.1); box-shadow: 0 0 24px -4px var(--gold); }
+        .btn-gold:hover { filter: brightness(1.1); box-shadow: 0 0 30px -4px var(--gold); transform: translateY(-1px); }
         .btn-danger { background: rgba(226, 99, 122, 0.14); color: var(--danger); border: 1px solid rgba(226, 99, 122, 0.35); }
         .btn-danger:hover { background: rgba(226, 99, 122, 0.24); }
-        .btn-lg { height: 46px; padding: 0 1.4rem; font-size: 0.9rem; }
+        .btn-lg { height: 48px; padding: 0 1.5rem; font-size: 0.92rem; }
+        .btn:active { transform: translateY(0) scale(0.98); }
+
+        /* premium sweep highlight — sits on gold/primary CTAs only */
+        .btn-gold::before, .btn-primary::before {
+            content: ''; position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+            background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: skewX(-18deg); transition: left 0.65s var(--ease);
+            pointer-events: none;
+        }
+        .btn-gold:hover::before, .btn-primary:hover::before { left: 130%; }
 
         .cart-badge {
             background: var(--danger); color: white; font-size: 0.65rem; font-family: var(--font-mono);
@@ -233,7 +312,7 @@
 
         .hero-title {
             font-family: var(--font-display); font-weight: 800;
-            font-size: clamp(2.6rem, 9vw, 5.2rem); line-height: 0.98; letter-spacing: -0.02em;
+            font-size: clamp(2.8rem, 9.5vw, 5.6rem); line-height: 0.97; letter-spacing: -0.02em;
         }
         .hero-title .line {
             display: block; opacity: 0; filter: blur(6px); transform: translateY(22px);
@@ -241,23 +320,39 @@
         }
         .hero-title .line:nth-child(1) { animation-delay: 0.12s; }
         .hero-title .line:nth-child(2) { animation-delay: 0.24s; }
-        .hero-title .line.accent { color: var(--gold-bright); font-style: italic; font-weight: 600; animation-delay: 0.36s; }
+        .hero-title .line.accent {
+            font-style: italic; font-weight: 600; animation-delay: 0.36s;
+            background: linear-gradient(100deg, var(--gold-bright) 20%, var(--gold) 40%, var(--neon) 55%, var(--gold-bright) 75%);
+            background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: revealLine 0.9s var(--ease) 0.36s forwards, heroShine 8s ease-in-out 1.3s infinite;
+        }
         @keyframes revealLine { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+        @keyframes heroShine { 0%, 100% { background-position: 0% 0; } 50% { background-position: 100% 0; } }
 
         .hero-desc {
-            color: var(--ink-soft); font-size: 0.9rem; max-width: 480px; margin: 0 auto;
+            color: var(--ink-soft); font-size: 0.94rem; max-width: 480px; margin: 0 auto;
             opacity: 0; animation: fadeUp 0.8s var(--ease) 0.5s forwards;
         }
-        .hero-cta { opacity: 0; animation: fadeUp 0.8s var(--ease) 0.62s forwards; }
+        .hero-cta { opacity: 0; animation: fadeUp 0.8s var(--ease) 0.62s forwards; display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+        @media (min-width: 860px) { .hero-cta { justify-content: flex-start; } }
 
         /* Top Xu — leaderboard, the hero's signature element */
         .top-xu-card {
-            width: 100%; max-width: 320px; margin: 0 auto;
+            width: 100%; max-width: 320px; margin: 0 auto; position: relative; overflow: hidden;
             background: linear-gradient(180deg, var(--panel-elevated), var(--panel));
-            border: 1px solid var(--hairline); border-radius: var(--radius-md);
+            border: 1px solid var(--hairline); border-radius: var(--radius-lg);
             padding: 1.1rem 1.25rem; box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.65);
-            opacity: 0; animation: fadeUp 1s var(--ease) 0.3s forwards;
+            opacity: 0; animation: fadeUp 1s var(--ease) 0.3s forwards, floatCard 6s ease-in-out 1.3s infinite;
+            transition: box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
         }
+        .top-xu-card:hover { box-shadow: 0 36px 70px -22px rgba(0, 0, 0, 0.75); border-color: rgba(201, 161, 90, 0.3); }
+        .top-xu-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
+            animation: cardShimmer 5s ease-in-out 1.5s infinite;
+        }
+        @keyframes cardShimmer { 0% { left: -60%; } 50%, 100% { left: 120%; } }
+        @keyframes floatCard { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         .top-xu-head {
             display: flex; align-items: center; justify-content: space-between;
             padding-bottom: 0.7rem; margin-bottom: 0.4rem; border-bottom: 1px solid var(--hairline);
@@ -283,6 +378,8 @@
         .marquee {
             position: relative; z-index: 1; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
             overflow: hidden; margin-top: 2.5rem; background: var(--panel);
+            mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+            -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
         }
         .marquee-track {
             display: flex; width: max-content; gap: 2.5rem; padding: 0.6rem 0;
@@ -308,14 +405,21 @@
            SECTIONS / GRID / CARDS
            ============================================================== */
         .section-header {
-            max-width: 1100px; margin: 0 auto 1rem; padding: 0 1rem;
+            max-width: 1100px; margin: 0 auto 1rem; padding: 0 1rem; position: relative;
             display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;
         }
         .section-title {
-            font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; color: var(--ink);
-            display: flex; align-items: center; gap: 0.5rem;
+            font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; color: var(--ink);
+            display: flex; align-items: center; gap: 0.5rem; position: relative;
         }
-        .section-subtitle { font-size: 0.75rem; color: var(--ink-soft); margin-top: 0.2rem; font-family: var(--font-body); }
+        .section-title .idx {
+            position: absolute; left: -0.15em; top: 50%; transform: translateY(-58%);
+            font-family: var(--font-display); font-weight: 800; font-size: 3.2em; line-height: 1;
+            color: transparent; -webkit-text-stroke: 1px rgba(201, 161, 90, 0.18);
+            z-index: -1; user-select: none; letter-spacing: 0;
+        }
+        .section-title .title-text { padding-left: 1.5rem; }
+        .section-subtitle { font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.25rem; font-family: var(--font-body); }
 
         .rate-callout {
             display: inline-flex; align-items: baseline; gap: 0.4rem; font-family: var(--font-mono);
@@ -337,17 +441,28 @@
             background: linear-gradient(180deg, var(--panel), var(--void));
             border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 1.25rem;
             display: flex; flex-direction: column; position: relative;
-            transition: border-color 0.3s var(--ease), transform 0.15s ease-out, box-shadow 0.3s var(--ease);
+            transition: border-color 0.3s var(--ease), transform 0.35s var(--ease-spring), box-shadow 0.4s var(--ease);
             transform-style: preserve-3d; will-change: transform;
+            overflow: hidden;
         }
         .card::before, .card::after {
             content: ''; position: absolute; width: 12px; height: 12px; opacity: 0;
             border-style: solid; border-color: var(--gold-bright); transition: opacity 0.3s var(--ease);
+            z-index: 2;
         }
         .card::before { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
         .card::after { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
-        .card:hover { border-color: var(--hairline-hover); box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.6); }
+        .card:hover { border-color: var(--hairline-hover); box-shadow: 0 24px 55px -22px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(201, 161, 90, 0.08); }
         .card:hover::before, .card:hover::after { opacity: 0.7; }
+
+        /* radial spotlight that follows the pointer — set via --mx/--my from JS */
+        .card > * { position: relative; z-index: 1; }
+        .card .card-spotlight {
+            position: absolute; inset: 0; z-index: 0; opacity: 0;
+            background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(201, 161, 90, 0.12), transparent 70%);
+            transition: opacity 0.4s var(--ease); pointer-events: none;
+        }
+        .card:hover .card-spotlight { opacity: 1; }
 
         @media (min-width: 900px) {
             .grid .card:nth-child(3n+2) { transform: translateY(1.3rem); }
@@ -389,8 +504,21 @@
         .why-card {
             scroll-snap-align: start; flex: 0 0 220px; background: var(--panel); border: 1px solid var(--hairline);
             border-radius: var(--radius-md); padding: 1.25rem;
+            transition: transform 0.35s var(--ease-spring), border-color 0.3s var(--ease), box-shadow 0.35s var(--ease);
         }
-        .why-card i { color: var(--gold-bright); font-size: 1.1rem; margin-bottom: 0.75rem; display: block; }
+        .why-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(201, 161, 90, 0.3);
+            box-shadow: 0 20px 40px -22px rgba(0, 0, 0, 0.7);
+        }
+        .why-card i {
+            color: var(--gold-bright); font-size: 1.2rem; margin-bottom: 0.75rem;
+            display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px; border-radius: 10px;
+            background: rgba(201, 161, 90, 0.08); border: 1px solid rgba(201, 161, 90, 0.18);
+            transition: transform 0.35s var(--ease-spring), background 0.3s var(--ease);
+        }
+        .why-card:hover i { transform: scale(1.08) rotate(-4deg); background: rgba(201, 161, 90, 0.14); }
         .why-card h4 { font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; margin-bottom: 0.4rem; }
         .why-card p { color: var(--ink-soft); font-size: 0.78rem; }
 
@@ -405,13 +533,15 @@
         }
         .modal-overlay.show { opacity: 1; pointer-events: auto; }
         .modal {
-            background: var(--panel-elevated); border: 1px solid var(--hairline);
-            border-radius: var(--radius-lg); width: 100%; max-width: 400px; padding: 1.5rem;
-            transform: translateY(14px) scale(0.98); transition: transform 0.3s var(--ease); position: relative;
-            max-height: 90vh; overflow-y: auto; box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(180deg, var(--panel-elevated), var(--panel) 140%);
+            border: 1px solid var(--hairline);
+            border-radius: var(--radius-lg); width: 100%; max-width: 400px; padding: 1.75rem;
+            transform: translateY(18px) scale(0.97); transition: transform 0.4s var(--ease-spring), opacity 0.3s var(--ease); position: relative;
+            max-height: 90vh; overflow-y: auto; box-shadow: 0 50px 100px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(201, 161, 90, 0.06);
+            opacity: 0;
         }
         .modal.admin-modal { max-width: 560px; }
-        .modal-overlay.show .modal { transform: translateY(0) scale(1); }
+        .modal-overlay.show .modal { transform: translateY(0) scale(1); opacity: 1; }
 
         .close-modal {
             position: absolute; top: 1rem; right: 1rem; background: none; border: none;
@@ -437,7 +567,7 @@
             border-radius: var(--radius-sm); color: var(--ink); font-size: 0.85rem; outline: none;
             transition: border-color 0.25s var(--ease);
         }
-        .form-control:focus { border-color: var(--gold); }
+        .form-control:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201, 161, 90, 0.12); }
         .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; cursor: pointer; }
         .checkbox-group input { cursor: pointer; accent-color: var(--gold); }
         .checkbox-group span { font-size: 0.8rem; color: var(--ink-soft); }
@@ -496,7 +626,24 @@
         .cart-summary-line { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 0.4rem; font-family: var(--font-mono); }
         .cart-total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--hairline); font-family: var(--font-mono); }
 
-        footer { text-align: center; padding: 2rem 1.5rem; color: var(--ink-faint); font-size: 0.7rem; font-family: var(--font-body); letter-spacing: 0.04em; }
+        footer {
+            position: relative; text-align: center; padding: 3rem 1.5rem 2rem; color: var(--ink-faint);
+            font-size: 0.72rem; font-family: var(--font-body); letter-spacing: 0.04em;
+            border-top: 1px solid var(--hairline);
+        }
+        footer::before {
+            content: ''; position: absolute; top: -1px; left: 50%; width: 140px; height: 1px;
+            transform: translateX(-50%); background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        .footer-brand {
+            font-family: var(--font-display); font-style: italic; font-weight: 600; color: var(--gold-bright);
+            font-size: 0.95rem; margin-bottom: 0.5rem;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+        .footer-links a {
+            color: var(--ink-soft); text-decoration: none; font-size: 0.75rem; transition: color 0.25s var(--ease);
+        }
+        .footer-links a:hover { color: var(--gold-bright); }
 
         .auth-pane, .admin-pane { display: none; }
         .auth-pane.active, .admin-pane.active { display: block; }
@@ -520,6 +667,10 @@
     </style>
 </head>
 <body>
+
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+    <div class="bg-mesh" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="bg-grid" aria-hidden="true"></div>
 
     <div id="globalAlert"></div>
     <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
@@ -572,6 +723,9 @@
                     <button class="btn btn-gold btn-lg magnetic" onclick="scrollToSection('premium')">
                         <span>Mở Kho Ngay</span> <i class="fa-solid fa-arrow-right"></i>
                     </button>
+                    <button class="btn btn-outline btn-lg magnetic" onclick="scrollToSection('tasks')">
+                        <span>Tích Xu Miễn Phí</span> <i class="fa-solid fa-coins"></i>
+                    </button>
                 </div>
             </div>
             <div class="top-xu-card">
@@ -616,7 +770,7 @@
 
     <div class="section-header reveal-target" id="premium">
         <div>
-            <h2 class="section-title">01 &nbsp;Sản Phẩm <span class="accent-text">Premium</span></h2>
+            <h2 class="section-title"><span class="idx" aria-hidden="true">01</span><span class="title-text">Sản Phẩm <span class="accent-text">Premium</span></span></h2>
             <p class="section-subtitle">Cam kết chất lượng, hỗ trợ cài đặt 1-1.</p>
         </div>
     </div>
@@ -625,7 +779,7 @@
 
     <div class="section-header reveal-target" id="tasks">
         <div>
-            <h2 class="section-title"><i class="fa-solid fa-list-check" style="color: var(--gold-bright);"></i> 02 &nbsp;Nhiệm Vụ <span class="accent-text">Tích Xu</span></h2>
+            <h2 class="section-title"><span class="idx" aria-hidden="true">02</span><span class="title-text"><i class="fa-solid fa-list-check" style="color: var(--gold-bright);"></i> Nhiệm Vụ <span class="accent-text">Tích Xu</span></span></h2>
             <p class="section-subtitle">Hoàn thành nhiệm vụ để nhận Xu, quy đổi trực tiếp khi mua File.</p>
         </div>
         <div class="rate-callout">
@@ -639,7 +793,7 @@
 
     <div class="section-header reveal-target" id="free-resources">
         <div>
-            <h2 class="section-title">03 &nbsp;Tài Nguyên <span class="accent-text">Miễn Phí</span></h2>
+            <h2 class="section-title"><span class="idx" aria-hidden="true">03</span><span class="title-text">Tài Nguyên <span class="accent-text">Miễn Phí</span></span></h2>
             <p class="section-subtitle">Tải xuống hoàn toàn miễn phí.</p>
         </div>
     </div>
@@ -676,7 +830,16 @@
         </div>
     </section>
 
-    <footer>&copy; 2026 JUNSTORE247.VN &middot; POWERED BY SUPABASE</footer>
+    <footer>
+        <p class="footer-brand">Junstore247</p>
+        <div class="footer-links">
+            <a href="#" onclick="scrollToSection('premium')">Shop</a>
+            <a href="#" onclick="scrollToSection('tasks')">Nhiệm Vụ</a>
+            <a href="#" onclick="scrollToSection('free-resources')">Free</a>
+            <a href="https://discord.gg/SQQYWdvxmQ" target="_blank" rel="noopener">Discord</a>
+        </div>
+        <p>&copy; 2026 JUNSTORE247.VN &middot; POWERED BY SUPABASE</p>
+    </footer>
 
     <!-- AUTH MODAL -->
     <div class="modal-overlay" id="loginModal">
@@ -908,16 +1071,23 @@
                 var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 var pointerFine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
 
-                // Navbar state on scroll
+                // Navbar state + scroll progress bar
                 var header = document.querySelector('header');
-                if (header) {
-                    var onScroll = function () {
+                var progress = document.getElementById('scrollProgress');
+                var onScroll = function () {
+                    if (header) {
                         if (window.scrollY > 12) header.classList.add('scrolled');
                         else header.classList.remove('scrolled');
-                    };
-                    window.addEventListener('scroll', onScroll, { passive: true });
-                    onScroll();
-                }
+                    }
+                    if (progress) {
+                        var doc = document.documentElement;
+                        var max = (doc.scrollHeight - doc.clientHeight) || 1;
+                        var ratio = Math.min(1, Math.max(0, window.scrollY / max));
+                        progress.style.transform = 'scaleX(' + ratio + ')';
+                    }
+                };
+                window.addEventListener('scroll', onScroll, { passive: true });
+                onScroll();
 
                 // Safe scroll-reveal: we add the hidden class ourselves,
                 // right before observing — so a script failure never
@@ -962,7 +1132,9 @@
                             var r = card.getBoundingClientRect();
                             var px = (e.clientX - r.left) / r.width - 0.5;
                             var py = (e.clientY - r.top) / r.height - 0.5;
-                            card.style.transform = 'perspective(700px) rotateX(' + (py * -6) + 'deg) rotateY(' + (px * 6) + 'deg) translateY(-2px)';
+                            card.style.transform = 'perspective(700px) rotateX(' + (py * -6) + 'deg) rotateY(' + (px * 6) + 'deg) translateY(-4px) scale(1.01)';
+                            card.style.setProperty('--mx', ((px + 0.5) * 100) + '%');
+                            card.style.setProperty('--my', ((py + 0.5) * 100) + '%');
                         });
                         grid.addEventListener('mouseleave', function (e) {
                             var card = e.target.closest ? e.target.closest('.card') : null;
@@ -1146,6 +1318,7 @@
             }
             grid.innerHTML = products.map(p => `
                 <div class="card">
+                    <div class="card-spotlight" aria-hidden="true"></div>
                     <span class="tag premium">${p.badge || 'Premium'}</span>
                     <h3 class="card-title">${p.name}</h3>
                     <p class="card-desc">${p.description || ''}</p>
@@ -1166,6 +1339,7 @@
             }
             grid.innerHTML = tasks.map(t => `
                 <div class="card">
+                    <div class="card-spotlight" aria-hidden="true"></div>
                     <span class="tag task">Nhiệm vụ Xu</span>
                     <h3 class="card-title">${t.name}</h3>
                     <p class="card-desc">${t.description || ''}</p>
@@ -1192,6 +1366,7 @@
             }
             grid.innerHTML = freeResources.map(p => `
                 <div class="card">
+                    <div class="card-spotlight" aria-hidden="true"></div>
                     <span class="tag free">${p.badge || 'Free'}</span>
                     <h3 class="card-title">${p.name}</h3>
                     <p class="card-desc">${p.description || ''}</p>
